@@ -6,7 +6,4 @@ class GameContext
     @code_size = code_size
     @trys = trys
   end
-
-
-
 end
