@@ -5,28 +5,38 @@ require "colorize"
 
 class Mastermind
   def initialize(game_context = GameContext.new,
-                 code_maker = CodeMaker.new(game_context.colors, game_context.code_size),
-                 code_breaker = CodeBreaker.new(game_context.colors, game_context.code_size))
+                 code_maker = CodeMaker.new(game_context),
+                 code_breaker = CodeBreaker.new(game_context))
     @trys = game_context.trys
-    @colors = game_context.colors
     @code_maker = code_maker
+    @colors = game_context.colors
     @code_breaker = code_breaker
   end
 
   def play
+    code_maker_human?
     secret_code = pick_secret_code
+    code_breaker_human?
     guesses = guess_secret_code(secret_code)
     puts choose_winner(guesses)
   end
 
+  def code_maker_human?
+    
+  end
+
+  def code_breaker_human?
+    
+  end
+
   def pick_secret_code
-     @code_maker.create_secret_code
+     @code_maker.create_secret_code(@colors)
   end
 
   def guess_secret_code(secret_code)
     @trys.times do
       puts "---------------------------------------------------------------------------------"
-      solution = @code_breaker.get_player_guess
+      solution = @code_breaker.get_player_guess(@colors)
       feedback = check_guess(solution, secret_code)
       return true if feedback[0] == secret_code.size
       print "Pistas: "
